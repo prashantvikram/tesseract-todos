@@ -2,4 +2,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: var(--big-padding);
+  border-radius: var(--small-padding);
+}
+
+.todo-card strike {
+  color: var(--font-light-color);
+}
+
+.todo-card button {
+  background-color: transparent;
+  border: none;
+}
+
+.icon-button {
+  color: var(--green);
 }

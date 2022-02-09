@@ -6,31 +6,25 @@ import {
   FAVOURITE_TODO,
   GET_TODOS,
   SELECT_TODO,
+  TOGGLE_ALERT,
   UPDATE_CONTENT,
 } from "./types";
 
 const INITIAL_STATE = {
   todos: [],
-  paginatedTodos: [],
   currentTodo: null,
-  currentPage: 0,
-  totalPages: 0,
-  pageSize: 4,
+  alert: {
+    text: "",
+    action: null,
+  },
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case GET_TODOS: {
-      const start = state.currentPage * state.pageSize;
-      const end = start + state.pageSize;
       return {
         ...state,
         todos: action.payload,
-        paginatedTodos: action.payload.sort(
-          (a, b) => b.updatedAt - a.updatedAt
-        ),
-        totalPages: Math.ceil(action.payload.length / state.pageSize),
-        currentPage: state.currentPage,
       };
     }
     case ADD_TODO: {
@@ -38,9 +32,6 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         todos: clonedList,
-        paginatedTodos: clonedList.sort((a, b) => b.updatedAt - a.updatedAt),
-        totalPages: Math.ceil(clonedList.length / state.pageSize),
-        currentPage: 0,
       };
     }
 
@@ -100,12 +91,19 @@ const reducer = (state = INITIAL_STATE, action) => {
       };
 
     case CHANGE_PAGE: {
-      const start = action.payload * state.pageSize;
-      const end = start + state.pageSize;
       return {
         ...state,
-        paginatedTodos: state.todos.sort((a, b) => b.updatedAt - a.updatedAt),
         currentPage: action.payload,
+      };
+    }
+
+    case TOGGLE_ALERT: {
+      return {
+        ...state,
+        alert: {
+          text: action.payload.text,
+          action: action.payload.action,
+        },
       };
     }
     default:

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, updateContent } from '../../redux/actions';
+import { addTodo, updateContent, selectTodo } from '../../redux/actions';
+
+import "./styles.css"
 
 export default function Editor() {
   const dispatch = useDispatch();
@@ -34,6 +36,7 @@ export default function Editor() {
         }
         dispatch(addTodo(todo))
       }
+      dispatch(selectTodo(null))
       setInput("")
     }
   }
@@ -43,8 +46,8 @@ export default function Editor() {
   }
 
   return (
-    <form onSubmit={(e) => onSubmit(e)}>
-      <input value={input} onChange={(e) => onChange(e)} />
+    <form onSubmit={(e) => onSubmit(e)} className="editor">
+      <input value={input} onChange={(e) => onChange(e)} placeholder="Buy milk" autoFocus/>
     </form>
   )
 }
