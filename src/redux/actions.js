@@ -1,4 +1,6 @@
 import {
+  deleteFromDataStore,
+  getStatsFromDataStore,
   getTodosFromDataStore,
   updatedContentInDataStore,
   writeTodoToDataStore,
@@ -10,6 +12,7 @@ import {
   SELECT_TODO,
   TOGGLE_ALERT,
   UPDATE_TODO,
+  GET_STATS,
 } from "./types";
 
 export const getTodos = (searchText = "", page = 0) => {
@@ -44,6 +47,7 @@ export const updateTodo = (todo) => {
 };
 
 export const deleteTodo = (id) => {
+  deleteFromDataStore(id);
   return {
     type: DELETE_TODO,
     payload: id,
@@ -54,5 +58,13 @@ export const toggleAlert = (text, action) => {
   return {
     type: TOGGLE_ALERT,
     payload: { text, action },
+  };
+};
+
+export const getStats = () => {
+  const { completed, total } = getStatsFromDataStore();
+  return {
+    type: GET_STATS,
+    payload: { completed, total },
   };
 };

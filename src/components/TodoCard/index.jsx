@@ -42,7 +42,7 @@ export default function TodoCard(props) {
         </button>
         <button onClick={(e) => {
           e.stopPropagation()
-          dispatch(toggleAlert("Are you sure?", deleteTodo(id)))
+          dispatch(toggleAlert("Are you sure?", () => deleteTodo(id)))
         }}>
           <span className="material-icons-round icon-button">
             delete_outline

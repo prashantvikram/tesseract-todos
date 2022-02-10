@@ -32,7 +32,7 @@ export default function List() {
   }
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       <ul ref={listRef} className='todo-list' onScroll={(e) => paginate(e)}>
         {todos.map(todo => <TodoCard key={todo.id} todo={todo}/>)}
       </ul>

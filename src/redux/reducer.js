@@ -1,7 +1,8 @@
+import { getTodosFromDataStore } from "../utils/read-write-service";
 import {
   ADD_TODO,
-  CHANGE_PAGE,
   DELETE_TODO,
+  GET_STATS,
   GET_TODOS,
   SELECT_TODO,
   TOGGLE_ALERT,
@@ -17,6 +18,10 @@ const INITIAL_STATE = {
   },
   searchText: "",
   page: 0,
+  stats: {
+    completed: 0,
+    total: 0,
+  },
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -34,6 +39,10 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         todos: clonedList,
+        stats: {
+          ...state.stats,
+          total: state.stats.total + 1,
+        },
       };
     }
 
@@ -57,19 +66,43 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         todos: clonedTodosList,
+        stats: {
+          ...state.stats,
+          completed: clonedTodosList.filter((todo) => todo.isCompleted).length,
+        },
       };
     }
 
-    case DELETE_TODO:
+    case DELETE_TODO: {
+      const updatedList = state.todos.filter(
+        (todo) => todo.id !== action.payload
+      );
+      if (updatedList.length < 4) {
+        const moreTodos = getTodosFromDataStore(state.searchText, state.page);
+        if (moreTodos.length) {
+          moreTodos.forEach((moreTodo) => {
+            const newTodoIndex = updatedList.findIndex(
+              (todo) => moreTodo.id === todo.id
+            );
+            if (newTodoIndex === -1) {
+              updatedList.push(moreTodo);
+            }
+          });
+        }
+      }
       return {
         ...state,
-        todos: state.todos.filter((todo) => todo.id !== action.payload),
+        todos: updatedList,
       };
+    }
 
-    case CHANGE_PAGE: {
+    case GET_STATS: {
       return {
         ...state,
-        currentPage: action.payload,
+        stats: {
+          completed: action.payload.completed,
+          total: action.payload.total,
+        },
       };
     }
 

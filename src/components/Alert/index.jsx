@@ -22,7 +22,7 @@ export default function Alert() {
           <button onClick={() => dispatch(toggleAlert("", null))}>Cancel</button>
           <button
             onClick={() => {
-              dispatch(action)
+              dispatch(action())
               dispatch(toggleAlert("", null))
             }}
           >

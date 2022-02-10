@@ -62,3 +62,37 @@ export const updatedContentInDataStore = (todo) => {
     console.error(error);
   }
 };
+
+export const deleteFromDataStore = (id) => {
+  try {
+    const storedTodos = window.localStorage.getItem("todos");
+    if (storedTodos) {
+      const parsedTodos = JSON.parse(storedTodos);
+      if (parsedTodos && Array.isArray(parsedTodos) && parsedTodos.length) {
+        const clonedTodos = parsedTodos.filter((pt) => pt.id !== id);
+        window.localStorage.setItem("todos", JSON.stringify(clonedTodos));
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const getStatsFromDataStore = () => {
+  let total = 0;
+  let completed = 0;
+  try {
+    const storedTodos = window.localStorage.getItem("todos");
+    if (storedTodos) {
+      const parsedTodos = JSON.parse(storedTodos);
+      if (parsedTodos && Array.isArray(parsedTodos) && parsedTodos.length) {
+        total = parsedTodos.length;
+        completed = parsedTodos.filter((pt) => pt.isCompleted).length;
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return { completed, total };
+};

@@ -1,5 +1,5 @@
 .app {
   height: 100vh;
   display: grid;
-  grid-template-rows: 10% 80% 10%;
+  grid-template-rows: 10% 40% 40% 10%;
 }

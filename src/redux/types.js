@@ -6,6 +6,7 @@ export const DELETE_TODO = "DELETE_TODO";
 export const FAVOURITE_TODO = "FAVOURITE_TODO";
 export const COMPLETE_TODO = "COMPLETE_TODO";
 export const GET_TODOS = "GET_TODOS";
+export const GET_STATS = "GET_STATS";
 export const CHANGE_PAGE = "CHANGE_PAGE";
 export const SORT_TODOS = "SORT_TODOS";
 export const TOGGLE_ALERT = "TOGGLE_ALERT";

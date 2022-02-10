@@ -4,11 +4,13 @@ import List from "./components/List";
 import Alert from "./components/Alert";
 
 import "./App.css";
+import Stats from "./components/Stats";
 
 function App() {
   return (
     <div className="app">
       <Header />
+      <Stats />
       <List />
       <Editor />
       <Alert />
