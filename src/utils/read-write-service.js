@@ -13,7 +13,10 @@ export const getTodosFromDataStore = (searchText = "", page = 0) => {
   } catch (error) {
     console.error(error);
   }
-  if (todos.length === 0) todos.push(...sampleData);
+  if (todos.length === 0) {
+    todos.push(...sampleData);
+    todos.map(writeTodoToDataStore);
+  }
   const filteredTodos = todos.filter((todo) =>
     todo.content.includes(searchText)
   );
@@ -81,15 +84,17 @@ export const deleteFromDataStore = (id) => {
 export const getStatsFromDataStore = () => {
   let total = 0;
   let completed = 0;
+  let todos = sampleData;
   try {
     const storedTodos = window.localStorage.getItem("todos");
     if (storedTodos) {
       const parsedTodos = JSON.parse(storedTodos);
       if (parsedTodos && Array.isArray(parsedTodos) && parsedTodos.length) {
-        total = parsedTodos.length;
-        completed = parsedTodos.filter((pt) => pt.isCompleted).length;
+        todos = parsedTodos;
       }
     }
+    total = todos.length;
+    completed = todos.filter((pt) => pt.isCompleted).length;
   } catch (error) {
     console.error(error);
   }

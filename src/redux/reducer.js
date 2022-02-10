@@ -29,7 +29,10 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_TODOS: {
       return {
         ...state,
-        todos: [...state.todos, ...action.payload.todos],
+        todos:
+          action.payload.page === 0
+            ? action.payload.todos
+            : [...state.todos, ...action.payload.todos],
         searchText: action.payload.searchText,
         page: action.payload.page,
       };

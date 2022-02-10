@@ -1,5 +1,5 @@
 header {
-  width: 100vw;
+  width: 100%;
   background-color: var(--background-color);
   padding: 0px var(--small-padding);
   font-weight: 600;

@@ -1,21 +1,27 @@
 const defaultTodos = [
   {
     id: "1",
-    content: "build time machine",
-    isFavourited: true,
-    isCompleted: true,
+    content: "star this todo",
+    isFavourited: false,
+    isCompleted: false,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
   {
     id: "2",
-    content: "todo 2",
+    content: "mark this one complete",
     isFavourited: false,
-    isCompleted: true,
+    isCompleted: false,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
   {
     id: "3",
-    content: "todo 3",
+    content: "delete this one",
     isFavourited: false,
-    isCompleted: false,
+    isCompleted: true,
+    createdAt: Date.now(),
+    updatedAt: Date.now(),
   },
 ];
 

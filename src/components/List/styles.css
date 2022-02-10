@@ -10,3 +10,32 @@
   transform: translate(-50%, -50%);
   width: 100%;
 }
+
+.search-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0px var(--big-padding);
+}
+
+.search {
+  border: none;
+  width: 100%;
+  padding: 0px var(--big-padding);
+  font-family: "Poppins", sans-serif;
+  outline: none;
+  height: 30px;
+  border-radius: 16px;
+  margin: 8px;
+  background-color: var(--background-color);
+  color: var(--green);
+  margin-left: var(--big-padding);
+}
+
+.search::placeholder {
+  color: var(--font-light-color);
+}
+
+.search-icon {
+  position: absolute;
+}

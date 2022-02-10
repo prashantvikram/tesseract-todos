@@ -22,17 +22,25 @@ export default function List() {
     }
   }
 
+  const search = (e) => {
+    dispatch(getTodos(e.target.value, page))
+  }
+
   useEffect(() => {
     dispatch(getTodos())
   }, [dispatch])
 
 
-  if (!todos || todos.length === 0) {
-    return null
+  if ((!todos || todos.length === 0) && searchText === "") {
+    return <div>No Todos</div>
   }
 
   return (
     <div style={{ position: "relative" }}>
+      <div className='search-container'>
+        <span className="material-icons-round search-icon">search</span>
+        <input value={searchText} onChange={(e) => search(e)} className="search" placeholder='search todos' />
+      </div>
       <ul ref={listRef} className='todo-list' onScroll={(e) => paginate(e)}>
         {todos.map(todo => <TodoCard key={todo.id} todo={todo}/>)}
       </ul>

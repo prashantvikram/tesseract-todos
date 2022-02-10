@@ -50,7 +50,7 @@ export default function Editor() {
 
   return (
     <form onSubmit={(e) => onSubmit(e)} className="editor">
-      <input value={input} onChange={(e) => onChange(e)} placeholder="Buy milk" autoFocus/>
+      <input value={input} onChange={(e) => onChange(e)} placeholder="Add a new todo" autoFocus/>
     </form>
   )
 }

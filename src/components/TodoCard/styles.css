@@ -13,6 +13,9 @@
 .todo-card button {
   background-color: transparent;
   border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .icon-button {

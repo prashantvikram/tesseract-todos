@@ -1,18 +1,36 @@
 import React from 'react'
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { deleteTodo, selectTodo, toggleAlert, updateTodo } from "../../redux/actions"
 
 import "./styles.css"
 
+
+// attribution: https://stackoverflow.com/a/43235785
+function getHighlightedText(text, highlight) {
+  const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+  return <span> { parts.map((part, i) => 
+      <span key={i} style={part.toLowerCase() === highlight.toLowerCase() ? { fontWeight: 'bold', color: "var(--font-dark-color)" } : {} }>
+          { part }
+      </span>)
+  } </span>;
+}
+
 export default function TodoCard(props) {
   const dispatch = useDispatch();
+  const searchText = useSelector(state => state.searchText);
 
   const { todo } = props;
   const { id, content, isCompleted, isFavourite } = todo;
 
-  const truncatedContent = content;
-  if (content && content.length > 16) `${content.substring(0, Math.min(16, content.length))}...`
+  let truncatedContent = content;
+  if (content && content.length > 25) {
+    truncatedContent = `${content.substring(0, Math.min(16, content.length))}...`
+  }
+
+  let text = () => {
+    return getHighlightedText(truncatedContent, searchText)
+  }
 
   return (
     <li key={id} className="todo-card" onClick={() => dispatch(selectTodo(id))}>
@@ -27,7 +45,7 @@ export default function TodoCard(props) {
             {isCompleted ? "check_circle" : "radio_button_unchecked"}
           </span>
         </button>
-        {isCompleted ? <strike>{truncatedContent}</strike> : <div>{truncatedContent}</div>}
+        {isCompleted ? <strike>{text()}</strike> : <div>{text()}</div>}
       </div>
       <div className='flex-center'>
         <button onClick={(e) => {
