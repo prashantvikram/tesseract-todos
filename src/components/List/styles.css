@@ -39,3 +39,9 @@
 .search-icon {
   position: absolute;
 }
+
+@media screen and (min-width: 768px) {
+  .todo-list {
+    height: 19vh;
+  }
+}
