@@ -2,4 +2,6 @@
   margin: 0px;
   padding: 0px;
   list-style-type: none;
+  height: 25vh;
+  overflow-y: auto;
 }

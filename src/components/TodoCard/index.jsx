@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux"
-import { markCompleted, markFavourite, deleteTodo, selectTodo, toggleAlert } from "../../redux/actions"
+import { deleteTodo, selectTodo, toggleAlert, updateTodo } from "../../redux/actions"
 
 import "./styles.css"
 
@@ -19,7 +19,9 @@ export default function TodoCard(props) {
       <div className='flex-center'>
         <button onClick={(e) => {
           e.stopPropagation();
-          dispatch(markCompleted(id))
+          const clonedTodo = { ...todo};
+          clonedTodo.isCompleted = !isCompleted;
+          dispatch(updateTodo(clonedTodo))
         }}>
           <span className="material-icons-round icon-button">
             {isCompleted ? "check_circle" : "radio_button_unchecked"}
@@ -30,7 +32,9 @@ export default function TodoCard(props) {
       <div className='flex-center'>
         <button onClick={(e) => {
           e.stopPropagation();
-          dispatch(markFavourite(id))
+          const clonedTodo = { ...todo};
+          clonedTodo.isFavourite = !isFavourite;
+          dispatch(updateTodo(clonedTodo))
         }}>
           <span className="material-icons-round icon-button">
             {isFavourite? "star" : "star_border"}
@@ -57,3 +61,7 @@ TodoCard.propTypes = {
     isFavourite: PropTypes.bool,
   }).isRequired
 }
+
+
+// background-color: #B7B7A4;
+//     color: #6B705C;

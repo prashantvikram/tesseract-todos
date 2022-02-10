@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getTodos } from '../../redux/actions';
 import TodoCard from '../TodoCard';
@@ -8,9 +8,18 @@ import "./styles.css"
 export default function List() {
   const dispatch = useDispatch();
   const todos = useSelector(state => state.todos);
+  const searchText = useSelector(state => state.searchText);
+  const page = useSelector(state => state.page);
+  const listRef = useRef();
 
-  const paginate = (e) => {
-    console.log(e)
+  const paginate = () => {
+    if (listRef && listRef.current) {
+      const diff = listRef.current.scrollTop === (listRef.current.scrollHeight - listRef.current.offsetHeight)
+      
+      if (diff) {
+        dispatch(getTodos(searchText, page + 1))
+      }
+    }
   }
 
   useEffect(() => {
@@ -23,10 +32,10 @@ export default function List() {
   }
 
   return (
-    <>
-      <ul className='todo-list' onScroll={(e) => paginate(e)}>
+    <div>
+      <ul ref={listRef} className='todo-list' onScroll={(e) => paginate(e)}>
         {todos.map(todo => <TodoCard key={todo.id} todo={todo}/>)}
       </ul>
-    </>
+    </div>
   )
 }

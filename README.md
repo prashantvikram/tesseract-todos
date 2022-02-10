@@ -1,9 +1,1 @@
-- [ ] mark completed
-- [ ] delete confirmation
-- [ ] search, sort, filter - array functions
-- [ ] auto-save after n seconds
-- [ ] dark mode for Context API
-- [ ] responsive - CSS
-- [ ] PWA
-- [ ] hosted on S3/Firebase hosting
-- [ ] shortcuts
+Deployed on Netlify [at this link](https://practical-bhabha-3e5efa.netlify.app/)

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addTodo, updateContent, selectTodo } from '../../redux/actions';
+import { addTodo, selectTodo, updateTodo } from '../../redux/actions';
 
 import "./styles.css"
 
@@ -23,7 +23,10 @@ export default function Editor() {
     e.preventDefault();
     if (input !== "") {
       if (currentTodo) {
-        dispatch(updateContent(currentTodo.id, input))
+        const clonedTodo = { ...currentTodo};
+        clonedTodo.content = input;
+        clonedTodo.updatedAt = Date.now(),
+        dispatch(updateTodo(clonedTodo))
       } else {
         const todo = {
           id: uuidv4(),

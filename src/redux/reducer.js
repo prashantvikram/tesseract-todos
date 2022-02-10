@@ -1,13 +1,11 @@
 import {
   ADD_TODO,
   CHANGE_PAGE,
-  COMPLETE_TODO,
   DELETE_TODO,
-  FAVOURITE_TODO,
   GET_TODOS,
   SELECT_TODO,
   TOGGLE_ALERT,
-  UPDATE_CONTENT,
+  UPDATE_TODO,
 } from "./types";
 
 const INITIAL_STATE = {
@@ -17,6 +15,8 @@ const INITIAL_STATE = {
     text: "",
     action: null,
   },
+  searchText: "",
+  page: 0,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -24,7 +24,9 @@ const reducer = (state = INITIAL_STATE, action) => {
     case GET_TODOS: {
       return {
         ...state,
-        todos: action.payload,
+        todos: [...state.todos, ...action.payload.todos],
+        searchText: action.payload.searchText,
+        page: action.payload.page,
       };
     }
     case ADD_TODO: {
@@ -44,39 +46,13 @@ const reducer = (state = INITIAL_STATE, action) => {
         currentTodo,
       };
     }
-
-    case UPDATE_CONTENT: {
+    case UPDATE_TODO: {
       const todoIndex = state.todos.findIndex(
         (t) => t.id === action.payload.id
       );
       const clonedTodosList = [...state.todos];
       if (todoIndex > -1) {
-        clonedTodosList[todoIndex].content = action.payload.content;
-      }
-      return {
-        ...state,
-        todos: clonedTodosList,
-      };
-    }
-
-    case COMPLETE_TODO: {
-      const todoIndex = state.todos.findIndex((t) => t.id === action.payload);
-      const clonedTodosList = [...state.todos];
-      if (todoIndex > -1) {
-        clonedTodosList[todoIndex].isCompleted =
-          !clonedTodosList[todoIndex].isCompleted;
-      }
-      return {
-        ...state,
-        todos: clonedTodosList,
-      };
-    }
-    case FAVOURITE_TODO: {
-      const todoIndex = state.todos.findIndex((t) => t.id === action.payload);
-      const clonedTodosList = [...state.todos];
-      if (todoIndex > -1) {
-        clonedTodosList[todoIndex].isFavourite =
-          !clonedTodosList[todoIndex].isFavourite;
+        clonedTodosList[todoIndex] = action.payload;
       }
       return {
         ...state,

@@ -1,37 +1,27 @@
 import {
+  getTodosFromDataStore,
+  updatedContentInDataStore,
+  writeTodoToDataStore,
+} from "../utils/read-write-service";
+import {
   GET_TODOS,
   ADD_TODO,
-  UPDATE_CONTENT,
-  COMPLETE_TODO,
-  FAVOURITE_TODO,
   DELETE_TODO,
   SELECT_TODO,
-  CHANGE_PAGE,
   TOGGLE_ALERT,
+  UPDATE_TODO,
 } from "./types";
-import sampleData from "../utils/sample-data";
 
-export const getTodos = () => {
-  const todos = [];
-  try {
-    const storedTodos = window.localStorage.getItem("todos");
-    if (storedTodos) {
-      const parsedTodos = JSON.parse(storedTodos);
-      if (parsedTodos && Array.isArray(parsedTodos) && parsedTodos.length) {
-        todos.push(...parsedTodos);
-      }
-    }
-  } catch (error) {
-    console.error(error);
-  }
-  if (todos.length === 0) todos.push(...sampleData);
+export const getTodos = (searchText = "", page = 0) => {
+  const todos = getTodosFromDataStore(searchText, page);
   return {
     type: GET_TODOS,
-    payload: todos,
+    payload: { todos, searchText, page },
   };
 };
 
 export const addTodo = (todo) => {
+  writeTodoToDataStore(todo);
   return {
     type: ADD_TODO,
     payload: todo,
@@ -45,24 +35,11 @@ export const selectTodo = (id) => {
   };
 };
 
-export const updateContent = (id, content) => {
+export const updateTodo = (todo) => {
+  updatedContentInDataStore(todo);
   return {
-    type: UPDATE_CONTENT,
-    payload: { id, content },
-  };
-};
-
-export const markCompleted = (id) => {
-  return {
-    type: COMPLETE_TODO,
-    payload: id,
-  };
-};
-
-export const markFavourite = (id) => {
-  return {
-    type: FAVOURITE_TODO,
-    payload: id,
+    type: UPDATE_TODO,
+    payload: todo,
   };
 };
 
@@ -70,13 +47,6 @@ export const deleteTodo = (id) => {
   return {
     type: DELETE_TODO,
     payload: id,
-  };
-};
-
-export const changePage = (page) => {
-  return {
-    type: CHANGE_PAGE,
-    payload: page,
   };
 };
 
